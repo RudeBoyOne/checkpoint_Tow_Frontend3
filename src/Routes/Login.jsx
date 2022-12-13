@@ -1,12 +1,11 @@
-import LoginForm from "../Components/LoginForm";
+import LoginForm from "../Components/LoginForm/LoginForm";
 
-const Contact = () => {
+const Login = () => {
   return (
     <>
-      <h1>Login</h1>
       <LoginForm />
     </>
   );
 };
 
-export default Contact;
+export default Login;

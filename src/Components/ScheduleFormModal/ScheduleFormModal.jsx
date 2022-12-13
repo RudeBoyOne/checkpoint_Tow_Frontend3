@@ -1,9 +1,9 @@
-import ScheduleForm from './ScheduleForm';
+import ScheduleForm from '../ScheduleForm/ScheduleForm';
 
 const ScheduleFormModal = () => {
   return (
     <div className={`modal fade`} id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div className="modal-dialog">
+      <div className="modal-dialog modal-dialog-centered">
         {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
         <div className={`modal-content`}>

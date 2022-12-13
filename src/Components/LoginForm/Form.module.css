@@ -1,0 +1,38 @@
+.boxFormLogin{
+	height: 69.1vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.card{
+  width: 23rem;
+  gap: 1rem;
+  padding: 1rem;
+  margin-top: 2rem;
+  height: 35%;
+  align-self: center;
+}
+
+.cardDark{
+  background-color: #31313196;
+}
+
+.inputSpacing+.inputSpacing{
+  margin: 1rem 0;
+}
+
+.boxInputPassword{
+  display: flex;
+  border: 1px solid #ced4da;
+  border-radius: .375rem;
+}
+
+.inputPassword{
+  border: none;
+}
+
+.icon{
+  align-self: center;
+  padding: 0 10px;
+  cursor: pointer;
+}
