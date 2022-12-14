@@ -1,13 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { LoginContext } from "../../Providers/ProviderLogin";
+import { ThemeContext } from "../../Providers/ProviderTheme"
 import api from "../../Services/api"
 import styles from "./ScheduleForm.module.css";
 
 const ScheduleForm = () => {
   const [dentistas, setDentistas] = useState([]);
   const [pacientes, setPacientes] = useState([]);
-  const [inputsForm, setInputsForm] = useState({ paciente: {}, dentista: {}, dataHoraAgen: "" })
+  const [inputsForm, setInputsForm] = useState({ paciente: {}, dentista: {}, dataHoraAgen: "" });
+  const [errorForm, setErrorForm] = useState("");
   const { useToken } = useContext(LoginContext);
+  const { theme } = useContext(ThemeContext);
+
   useEffect(() => {
     trasDentistas();
     trasPacientes();
@@ -24,7 +28,7 @@ const ScheduleForm = () => {
     } catch (error) {
       console.error(error)
     }
-  }
+  };
 
   const trasPacientes = async () => {
     try {
@@ -37,68 +41,69 @@ const ScheduleForm = () => {
     } catch (error) {
       console.error(error)
     }
-  }
+  };
 
   const handleSubmit = (e) => {
-    //Nesse handlesubmit você deverá usar o preventDefault
     e.preventDefault();
-    //obter os dados do formulário e enviá-los no corpo da requisição 
-    //para a rota da api que marca a consulta
-    //lembre-se que essa rota precisa de um Bearer Token para funcionar.
-    //Lembre-se de usar um alerta para dizer se foi bem sucedido ou ocorreu um erro
     agendConsulta();
+    e.target.reset();
   };
 
 
   const agendConsulta = async () => {
+
+    const body = {
+      paciente: {
+        matricula: inputsForm.paciente
+      },
+      dentista: {
+        matricula: inputsForm.dentista
+      },
+      dataHoraAgendamento: inputsForm.dataHoraAgen
+    };
+    console.log(body)
+
+    const header = `${useToken.tipo} ${useToken.token}`;
+
+    console.log(header);
     try {
-      // let dentistaJson = dentistas.find((dentista) => dentista.matricula === inputsForm.dentista);
-      // let pacienteJson = pacientes.find((paciente) => paciente.matricula === inputsForm.paciente);
-
-      // dentistaJson = JSON.stringify(dentistaJson).replaceAll(/[\"]/g, '');
-      // pacienteJson = JSON.stringify(pacienteJson).replaceAll(/[\"]/g, '');
-      let tokeJson = JSON.stringify(useToken.token).replaceAll(/[\"]/g, '');
-      let tipoTokenJson = JSON.stringify(useToken.tipo).replaceAll(/[\"]/g, '');
-
-      let body = {
-        paciente: {
-          matricula: inputsForm.paciente
-        },
-        "dentista": {
-          matricula: inputsForm.dentista
-        },
-        dataHoraAgendamento: inputsForm.dataHoraAgen
-      };
-
-      const response = await api.post("/consulta", JSON.stringify(body),
-        {
-          headers: {
-            authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBcGkgREggRWNvbW1lcmNlIiwic3ViIjoiZGVudGlzdGFBZG1pbiIsImlhdCI6MTY3MDk1NTE2NywiZXhwIjoxNjcwOTU4NzY3fQ.c5zsD0xY7P6AmMZqK6ZOzdE41QSsa7_Oi5LKEpRi6Is",
-            "Content-Type": "application/json"
-          }
+      const response = await api.post("/consulta", body, {
+        headers: {
+          authorization: header
         }
-      )
-
+      })
+      console.log(response.data)
+      alert("Consulta agendada com sucesso!")
     } catch (error) {
-      console.log(error)
+      console.error(error.message);
+      console.error(error.response?.data);
+      alert(error.response?.data)
+      console.log(errorForm)
     }
-  }
+  };
 
   return (
     <>
-      {/* //Na linha seguinte deverá ser feito um teste se a aplicação
-        // está em dark mode e deverá utilizar o css correto */}
       <div
-        className={`text-center container}`
-        }
+        className={`
+          container
+          text-center 
+          ${theme ? styles.cardDark : ""}
+        `}
       >
         <form onSubmit={handleSubmit}>
           <div className={`row ${styles.rowSpacing}`}>
             <div className="col-sm-12 col-lg-6">
-              <label htmlFor="dentist" className="form-label">
+              <label
+                htmlFor="dentist"
+                className={`
+                    form-label
+                    ${theme ? styles.textDark : ""}
+                    `}>
                 Dentist
               </label>
               <select className="form-select" name="dentist" id="dentist" onChange={(e) => setInputsForm({ ...inputsForm, dentista: e.target.value })}>
+                <option></option>
                 {
                   dentistas.map((dentista) =>
                     <option key={dentista.matricula} value={dentista.matricula} >
@@ -109,10 +114,16 @@ const ScheduleForm = () => {
               </select>
             </div>
             <div className="col-sm-12 col-lg-6">
-              <label htmlFor="patient" className="form-label">
+              <label
+                htmlFor="patient"
+                className={`
+                form-label
+                ${theme ? styles.textDark : ""}
+                `}>
                 Patient
               </label>
               <select className="form-select" name="patient" id="patient" onChange={(e) => setInputsForm({ ...inputsForm, paciente: e.target.value })}>
+                <option></option>
                 {
                   pacientes.map((paciente) =>
                     <option key={paciente.matricula} value={paciente.matricula}>
@@ -125,7 +136,12 @@ const ScheduleForm = () => {
           </div>
           <div className={`row ${styles.rowSpacing}`}>
             <div className="col-12">
-              <label htmlFor="appointmentDate" className="form-label">
+              <label
+                htmlFor="appointmentDate"
+                className={`
+                form-label
+                ${theme ? styles.textDark : ""}
+                `}>
                 Date
               </label>
               <input
@@ -138,10 +154,12 @@ const ScheduleForm = () => {
             </div>
           </div>
           <div className={`row ${styles.rowSpacing}`}>
-            {/* //Na linha seguinte deverá ser feito um teste se a aplicação
-        // está em dark mode e deverá utilizar o css correto */}
             <button
-              className={`btn btn-light ${styles.button}`}
+              className={`
+                btn 
+                ${theme ? "btn-dark" : "btn-light"}  
+                ${styles.button}
+                `}
               type="submit"
             >
               Schedule

@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { LoginContext } from "../../Providers/ProviderLogin"
 import { ThemeContext } from "../../Providers/ProviderTheme";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const { useToken, limparToken } = useContext(LoginContext);
-  const { theme,  handleTheme } = useContext(ThemeContext);
+  const { theme, handleTheme } = useContext(ThemeContext);
 
   const logoutFunction = () => {
     localStorage.clear();
@@ -15,17 +16,15 @@ const Navbar = () => {
 
   return (
     <header className="sticky-top">
-      {/* //Na linha seguinte deverá ser feito um teste se a aplicação
-        // está em dark mode e deverá utilizar navbar-dark bg-dark ou navbar-light bg-light*/}
       <nav
         className={
           `navbar navbar-expand-sm 
-          ${ theme ? "navbar-dark" : "navbar-light" } 
-          ${ theme ? "bg-dark" : "bg-light" }
-          ${ theme ? "bg-dark" : "bg-light" }
+          ${theme ? "navbar-dark" : "navbar-light"} 
+          ${theme ? "bg-dark" : "bg-light"}
+          ${theme ? "bg-dark" : "bg-light"}
           `}
-          aria-label="Third navbar example"
-          >
+        aria-label="Third navbar example"
+      >
         <div className="container">
           <Link className={`navbar-brand ${styles.navbarBrand}`} to="/home">
             DH Odonto
@@ -33,14 +32,22 @@ const Navbar = () => {
           <div
             className="collapse navbar-collapse justify-content-end"
             id="navbarsExample03"
-            >
+          >
             <ul className="navbar-nav mb-2 mb-sm-0">
               <li className={
                 `nav-item 
                 ${styles.navBarLink}
-                ${ theme ? "textLight" : "textDark" }
+                ${theme ? "textLight" : "textDark"}
                 `}>
-                {useToken.token ? <Link to="/home" > Home </Link> : null}
+                {
+                  useToken.token ?
+                    <Link
+                      to="/home"
+                      className={`${theme ? styles.textDark : styles.textLight}`}
+                    > Home </Link>
+                    :
+                    null
+                }
               </li>
               <li className={
                 `nav-item 
@@ -48,24 +55,27 @@ const Navbar = () => {
                 
                 `}>
                 {
-                 useToken.token ? 
-                  <Link 
-                    to="/" 
-                    onClick={logoutFunction}
-                    className={`${styles.textDark}`}
-                    >Logout </Link> : 
-                  <Link to="/"> Login </Link>
+                  useToken.token ?
+                    <Link
+                      to="/"
+                      onClick={logoutFunction}
+                      className={`${theme ? styles.textDark : styles.textLight}`}
+                    >Logout </Link> :
+                    <Link
+                      to="/"
+                      className={`${theme ? styles.textDark : styles.textLight}`}
+                    > Login </Link>
                 }
               </li>
               <li className={`nav-item`}>
-                <button 
+                <button
                   className={`
                     btn 
                     ${styles.btnStyle}
                     ${theme ? "btn-light" : "btn-dark"}
                     `}
-                    onClick={handleTheme}
-                    >
+                  onClick={handleTheme}
+                >
                   {theme ? "☀" : "🌙"}
                 </button>
               </li>

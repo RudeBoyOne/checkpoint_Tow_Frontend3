@@ -1,5 +1,6 @@
 .cardDark{
   background-color: #31313196;
+  border-radius: 5px;
 }
 
 .card:hover{

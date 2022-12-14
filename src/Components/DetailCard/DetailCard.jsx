@@ -3,20 +3,18 @@ import { useEffect } from "react";
 import ScheduleFormModal from "../ScheduleFormModal/ScheduleFormModal";
 import styles from "./DetailCard.module.css";
 import { LoginContext } from "../../Providers/ProviderLogin";
+import { ThemeContext } from "../../Providers/ProviderTheme"
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import api from "../../Services/api";
 
 const DetailCard = () => {
   const { useToken } = useContext(LoginContext);
+  const { theme } = useContext(ThemeContext);
   const [dentista, setDentista] = useState({});
   const { id } = useParams()
 
-  useEffect(() => {
-    //Nesse useEffect, você vai fazer um fetch na api passando o 
-    //id do dentista que está vindo do react-router e carregar os dados em algum estado
-    trasDentistaDetalhes();
-  }, []);
+  useEffect(() => { trasDentistaDetalhes(); }, []);
 
   const trasDentistaDetalhes = async () => {
     try {
@@ -32,15 +30,15 @@ const DetailCard = () => {
   }
 
   return (
-    //As instruções que estão com {''} precisam ser 
-    //substituídas com as informações que vem da api
     <>
       <h1>Detail about Dentist { dentista.nome } </h1>
       <section className="card col-sm-12 col-lg-6 container">
-        {/* //Na linha seguinte deverá ser feito um teste se a aplicação
-        // está em dark mode e deverá utilizar o css correto */}
         <div
-          className={`card-body row`}
+          className={`
+            card-body 
+            row
+            ${theme ? styles.cardDark : ""}
+            `}
         >
           <div className="col-sm-12 col-lg-6">
             <img
@@ -60,14 +58,14 @@ const DetailCard = () => {
               </li>
             </ul>
             <div className="text-center">
-              {/* //Na linha seguinte deverá ser feito um teste se a aplicação
-              // está em dark mode e deverá utilizado o css correto */}
               <button
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                className={`btn btn-light ${styles.button
-                  }`}
-              >
+                className={`
+                btn 
+                ${ theme ? "btn-dark" : "btn-light"}  
+                ${styles.button}
+                `}>
                 Marcar consulta
               </button>
             </div>

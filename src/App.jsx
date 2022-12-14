@@ -2,24 +2,23 @@
 import { Outlet } from "react-router-dom";
 import Footer from "./Components/Footer/Footer";
 import Navbar from "./Components/Navbar/Navbar";
-import ThemeProvider from "./Providers/ProviderTheme";
-import LoginProvider from "./Providers/ProviderLogin";
+import { ThemeContext } from "./Providers/ProviderTheme"
+import { useContext } from "react";
+import { useEffect } from "react";
 
 function App() {
+  const { theme } = useContext(ThemeContext);
+
   return (
     <>
-      {/* //Na linha seguinte deverá ser feito um teste se a aplicação
-        // está em dark mode e deverá utilizar a classe dark ou light */}
-      <div className={`app light}`}>
-        <ThemeProvider>
-          <LoginProvider>
-            <Navbar />
-            <main>
-              <Outlet />
-            </main>
-            <Footer />
-          </LoginProvider>
-        </ThemeProvider>
+      <div className={`
+              ${theme ? "dark" : ""}
+            `} >
+        <Navbar />
+        <main >
+          <Outlet />
+        </main>
+        <Footer />
       </div>
     </>
   );

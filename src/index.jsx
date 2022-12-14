@@ -9,8 +9,9 @@ import Login from "./Routes/Login"
 import Detail from "./Routes/Detail"
 import Home from "./Routes/Home"
 import PageNotFound from "./Components/NotFound/PageNotFound"
-import { LoginContext } from "./Providers/ProviderLogin";
+import LoginProvider, { LoginContext } from "./Providers/ProviderLogin";
 import { useContext } from "react";
+import ThemeProvider from "./Providers/ProviderTheme";
 
 const PrivateRoute = ({ children }) => {
   const { useToken } = useContext(LoginContext);
@@ -21,22 +22,26 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route path="/" element={<Login />} />
-          <Route path="/home" element={
-            <PrivateRoute>
-              <Home />
-            </PrivateRoute>
-          } />
-          <Route path="dentista/:id" element={
-            <PrivateRoute>
-              <Detail />
-            </PrivateRoute>
-          } />
-          <Route path="*" element={<PageNotFound />} />
-        </Route>
-      </Routes>
+      <ThemeProvider>
+        <LoginProvider>
+          <Routes>
+            <Route path="/" element={<App />}>
+              <Route path="/" element={<Login />} />
+              <Route path="/home" element={
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              } />
+              <Route path="dentista/:id" element={
+                <PrivateRoute>
+                  <Detail />
+                </PrivateRoute>
+              } />
+              <Route path="*" element={<PageNotFound />} />
+            </Route>
+          </Routes>
+        </LoginProvider>
+      </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode >
 );

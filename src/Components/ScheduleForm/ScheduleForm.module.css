@@ -6,6 +6,10 @@
   padding: 1rem 0 2rem;
 }
 
+.textDark{
+  color: white;
+}
+
 .rowSpacing{
   padding-bottom: 1rem;
 }

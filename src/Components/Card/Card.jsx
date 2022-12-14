@@ -4,11 +4,14 @@ import styles from "./Card.module.css";
 import api from "../../Services/api"
 import { useState } from "react";
 import { LoginContext } from "../../Providers/ProviderLogin";
+import { ThemeContext } from "../../Providers/ProviderTheme"
 import { useContext } from "react";
 
 const Card = () => {
   const { useToken } = useContext(LoginContext);
   const [dentistas, setDentistas] = useState([]);
+  const { theme } = useContext(ThemeContext);
+
 
   useEffect(() => {
     trasDentistas();
@@ -39,7 +42,10 @@ const Card = () => {
         {
           dentistas.map((dentista) => (
             <Link key={dentista.matricula} to={`/dentista/${dentista.matricula}`}>
-              <div className={"card"}>
+              <div className={`
+                card
+                ${ theme ? styles.cardDark : ""}
+                `}>
                 <img
                   className="card-img-top"
                   src="/images/doctor.jpg"

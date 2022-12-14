@@ -1,7 +1,11 @@
 .boxFormLogin{
-	height: 69.1vh;
+	height: 70vh;
   display: flex;
   flex-direction: column;
+}
+
+.mainDark{
+  background-color: #747474;
 }
 
 .card{
@@ -27,6 +31,10 @@
   border-radius: .375rem;
 }
 
+.boxInputPasswordDark{
+  background-color: #fff;
+}
+
 .inputPassword{
   border: none;
 }
@@ -35,4 +43,11 @@
   align-self: center;
   padding: 0 10px;
   cursor: pointer;
+}
+
+.alertErroForm{
+  width: 40%;
+  position: absolute;
+  margin-left: 30%;
+  margin-top: 2%;
 }

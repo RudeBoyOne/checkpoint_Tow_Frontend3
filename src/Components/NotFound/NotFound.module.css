@@ -1,14 +1,19 @@
-.container{
+.container {
     display: flex;
     flex-direction: column;
 }
 
-img{
+img {
     width: 255px;
     width: 255px;
     align-self: center;
 }
 
-p{
+p {
     text-align: center;
+}
+
+.linkGoBack {
+    font-size: x-large;
+    font-weight: 600;
 }
