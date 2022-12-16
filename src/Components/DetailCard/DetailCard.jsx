@@ -11,6 +11,7 @@ import api from "../../Services/api";
 const DetailCard = () => {
   const { useToken } = useContext(LoginContext);
   const { theme } = useContext(ThemeContext);
+  const [response, setResponse] = useState("");
   const [dentista, setDentista] = useState({});
   const { id } = useParams()
 
@@ -29,10 +30,26 @@ const DetailCard = () => {
     }
   }
 
+  const handleResponse = (mensagem) => {
+    setResponse(mensagem);
+    console.log(response)
+  };
+
   return (
     <>
-      <h1>Detail about Dentist { dentista.nome } </h1>
+
+      <h1>Detail about Dentist {dentista.nome} </h1>
       <section className="card col-sm-12 col-lg-6 container">
+
+        {
+          response ?
+            <div className="alert alert-warning alert-dismissible fade show" role="alert">
+               {response}
+              <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div> :
+          null
+        }
+
         <div
           className={`
             card-body 
@@ -49,12 +66,12 @@ const DetailCard = () => {
           </div>
           <div className="col-sm-12 col-lg-6">
             <ul className="list-group">
-              <li className="list-group-item">Nome: { dentista.nome }</li>
+              <li className="list-group-item">Nome: {dentista.nome}</li>
               <li className="list-group-item">
-                Sobrenome: { dentista.sobrenome }
+                Sobrenome: {dentista.sobrenome}
               </li>
               <li className="list-group-item">
-                Usuário: { dentista.usuario?.username }
+                Usuário: {dentista.usuario?.username}
               </li>
             </ul>
             <div className="text-center">
@@ -63,7 +80,7 @@ const DetailCard = () => {
                 data-bs-target="#exampleModal"
                 className={`
                 btn 
-                ${ theme ? "btn-dark" : "btn-light"}  
+                ${theme ? "btn-dark" : "btn-light"}  
                 ${styles.button}
                 `}>
                 Marcar consulta
@@ -72,7 +89,10 @@ const DetailCard = () => {
           </div>
         </div>
       </section>
-      <ScheduleFormModal />
+      <ScheduleFormModal handleResponse={handleResponse} />
+
+
+
     </>
   );
 };

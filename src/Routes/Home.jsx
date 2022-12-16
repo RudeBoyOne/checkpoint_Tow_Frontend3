@@ -3,12 +3,6 @@ import Card from "../Components/Card/Card";
 
 const Home = () => {
 
-  useEffect(() => {
-    //Nesse useEffect, deverá ser obtido todos os dentistas da API
-    //Armazena-los em um estado para posteriormente fazer um map
-    //Usando o componente <Card />
-  }, []);
-
   return (
     <>
       <h1>Home</h1>

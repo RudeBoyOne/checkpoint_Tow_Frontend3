@@ -21,9 +21,8 @@ const Navbar = () => {
           `navbar navbar-expand-sm 
           ${theme ? "navbar-dark" : "navbar-light"} 
           ${theme ? "bg-dark" : "bg-light"}
-          ${theme ? "bg-dark" : "bg-light"}
           `}
-        aria-label="Third navbar example"
+        aria-label="navbar"
       >
         <div className="container">
           <Link className={`navbar-brand ${styles.navbarBrand}`} to="/home">

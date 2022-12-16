@@ -4,7 +4,7 @@ import { ThemeContext } from "../../Providers/ProviderTheme"
 import api from "../../Services/api"
 import styles from "./ScheduleForm.module.css";
 
-const ScheduleForm = () => {
+const ScheduleForm = (props) => {
   const [dentistas, setDentistas] = useState([]);
   const [pacientes, setPacientes] = useState([]);
   const [inputsForm, setInputsForm] = useState({ paciente: {}, dentista: {}, dataHoraAgen: "" });
@@ -61,24 +61,18 @@ const ScheduleForm = () => {
       },
       dataHoraAgendamento: inputsForm.dataHoraAgen
     };
-    console.log(body)
-
     const header = `${useToken.tipo} ${useToken.token}`;
 
-    console.log(header);
     try {
       const response = await api.post("/consulta", body, {
         headers: {
           authorization: header
         }
       })
-      console.log(response.data)
       alert("Consulta agendada com sucesso!")
     } catch (error) {
-      console.error(error.message);
-      console.error(error.response?.data);
-      alert(error.response?.data)
-      console.log(errorForm)
+      props.handleResponse(error.response?.data);
+      alert(error.response?.data);
     }
   };
 

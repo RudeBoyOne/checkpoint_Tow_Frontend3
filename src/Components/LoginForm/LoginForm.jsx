@@ -26,7 +26,6 @@ const LoginForm = () => {
 
   const authlogin = async () => {
     try {
-
       if (!formLogin.login.trim() || formLogin.login.length < 5 || formLogin.password.length < 5) {
         setErrorForm("Erro. Por favor, verifique os dados inseridos no formulário")
       } else {
@@ -41,7 +40,7 @@ const LoginForm = () => {
       }
 
     } catch (error) {
-      console.error(error);
+      setErrorForm("Dados inválidos!")
     }
   }
 
@@ -65,6 +64,7 @@ const LoginForm = () => {
               placeholder="Login"
               name="login"
               required
+              aria-label="login"
             />
             <div className={` 
                     ${styles.boxInputPassword} 
@@ -79,6 +79,7 @@ const LoginForm = () => {
                 name="password"
                 type={passwordVisible ? "text" : "password"}
                 required
+                aria-label="password"
               />
               <div
                 onClick={() => setPasswordVisible(!passwordVisible)}

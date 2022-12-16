@@ -3,10 +3,11 @@ import { ThemeContext } from "../../Providers/ProviderTheme"
 import styles from "./ScheduleFormModal.module.css";
 import { useContext } from 'react';
 
-const ScheduleFormModal = () => {
+const ScheduleFormModal = (props) => {
   const { theme } = useContext(ThemeContext);
 
   return (
+    //criar uma função a partir de um estado que irá setar o id do modal ou retirá-lo dependendo do resultado da requisição 
     <div className={`modal fade`} id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div className="modal-dialog modal-dialog-centered">
         <div className={`
@@ -33,7 +34,7 @@ const ScheduleFormModal = () => {
                 aria-label="Close"></button>
           </div>
           <div className="modal-body">
-            <ScheduleForm />
+            <ScheduleForm handleResponse={props.handleResponse}/>
           </div>
         </div>
       </div>
